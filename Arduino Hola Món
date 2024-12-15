@@ -1,0 +1,11 @@
+void setup()
+{  
+//esto inicia una comunicación serial a una tasa de 9600 baudios
+Serial.begin(9600);
+}
+
+void loop(){
+//envía “hola mundo” por la puerta serial
+Serial.println("Hello World");
+//espera 100 milisegundos para que no nos vuelva loco la repetición  
+delay(100);}
