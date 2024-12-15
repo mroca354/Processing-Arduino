@@ -1,0 +1,21 @@
+char val; //Data received from the serial port
+
+void setup()
+{  
+ pinMode(13, OUTPUT); //Set pin as OUTPUT
+//esto inicia una comunicación serial a una tasa de 9600 baudios
+Serial.begin(9600);
+}
+
+void loop(){
+if (Serial.available()) { //If data is available to read,
+  val = Serial.read(); //read it and store it in val
+  }
+if (val == '1') { //If 1 was received
+  digitalWrite(13, HIGH); // turn the LED on
+  } 
+else {
+  digitalWrite(13, LOW); // otherwise turn it off
+  }
+delay(10); // Wait 10 milliseconds for next reading
+}
