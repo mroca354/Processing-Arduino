@@ -1,42 +1,16 @@
-
-import controlP5.*;
-import processing.serial.*;
- 
-// Creamos las variables para ControlP5, el Slider y el puerto Serial
-ControlP5 cp5;
-Serial serial;
+import processing.serial.*; 
 Serial myPort;
-// Solo se ejecuta una vez, al iniciar el Sketch
-void setup() {
-  // Tamaño de la Ventana
-  size(500, 300);
-  // Creamos el objeto de ControlP5
-  cp5 = new ControlP5(this);
-  // Creamos el objeto Slider  
- cp5.addSlider("R", 0, 255, 128, 40, 100, 300, 40);
- cp5.addSlider("G", 0, 255, 128, 40, 150, 300, 40);
- cp5.addSlider("B", 0, 255, 128, 40, 200, 300, 40);
-  textSize(30);
-  text("RGB",10,50);
-  // Creamos el objeto del puerto Serial
-String portName = Serial.list()[0]; //change the 0 to a 1 or 2 etc. to match your port  
-  myPort = new Serial(this,"/dev/ttyUSB0",57600);
+String val;
+// Create object from Serial class 
+void setup() {  
+  size(200,200); //make our canvas 200 x 200 pixels big  
+  String portName = Serial.list()[0]; //change the 0 to a 1 or 2 etc. to match your port  
+  myPort = new Serial(this,"COM3",9600);
 }
- 
-// Se ejecuta N frames por segundo
-void draw() {
-  // En este caso no debe dibujar nada
-}
- 
-// Cuando ocurra un evento, aquí lo procesamos
-void controlEvent(ControlEvent evento) {
-  // Obtenemos el nombre y el valor del evento
-  String nombre = evento.getController().getName();
-  int valor = int(evento.getController().getValue());
-  // Envíamos el valor al Arduino a través del Serial
-  serial.write(nombre + valor);
-  println(nombre + valor);
-  delay(100);
-  // Imprimimos en la consola, para ver que todo va Ok
-  println(nombre + valor);
+
+void draw() {  
+if ( myPort.available() >0){  //If data is available,  
+  val = myPort.readStringUntil('\n');  //Lo guarda en val  
+  } 
+println(val); //Lo muestra por consola
 }
